@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>СЕТЬ KUCHER</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101827;color:white;font-family:Arial,sans-serif}
+header{padding:35px 20px;text-align:center;background:linear-gradient(135deg,#172b43,#76502e)}
+h1{font-size:32px;letter-spacing:2px;margin:5px}
+h1 span{color:#f4c477}
+header p{color:#eee}
+main{max-width:850px;margin:auto;padding:20px}
+h2{margin:25px 0 15px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:13px}
+.card{background:#1d2b40;border:1px solid #34445c;border-radius:18px;padding:20px;min-height:145px;color:white;text-align:left}
+.icon{font-size:35px;display:block;margin-bottom:15px}
+.card b{font-size:15px}
+.card small{display:block;color:#e6bd7b;margin-top:10px}
+button{cursor:pointer}
+.back{background:none;border:0;color:#f4c477;font-size:16px;padding:10px 0}
+.shop{background:#1d2b40;border-radius:18px;padding:20px;line-height:1.7}
+.category{display:inline-block;background:#34445c;padding:9px 13px;border-radius:20px;margin:4px;font-size:13px}
+.empty{text-align:center;padding:35px 15px;color:#e0e5ed;line-height:1.7}
+footer{text-align:center;color:#8996a8;padding:35px 10px}
+@media(max-width:380px){.grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header>
+<h1>СЕТЬ <span>KUCHER</span></h1>
+<p>Выбирай. Заказывай. Получай.</p>
+</header>
+
+<main>
+<div id="home">
+<h2>Добро пожаловать!</h2>
+<p>Выберите интересующий вас магазин:</p>
+<div class="grid" id="shops"></div>
+</div>
+<div id="catalog" hidden>
+<button class="back" onclick="goHome()">← Все магазины</button>
+<h2 id="shopTitle"></h2>
+<div class="shop" id="shopContent"></div>
+</div>
+</main>
+
+<footer>СЕТЬ KUCHER © 2026</footer>
+
+<script>
+const shops=[
+{name:"KUCHER STORE",icon:"👕",categories:["Куртки","Кофты","Майки","Штаны","Обувь","Трусы и носки","Шапки, кепки и шарфы","Рюкзаки и сумки","Браслеты и часы"]},
+{name:"ТГ НОМЕРА KUCHER",icon:"📱",categories:["Красивые Telegram-номера"]},
+{name:"TEHNO KUCHER",icon:"🎧",categories:["Чехлы","Зарядки","Аксессуары","Наушники"]},
+{name:"ЧАЙНЫЙ РИТУАЛ KUCHER",icon:"🍵",categories:["Чабани","Ножи","Игрушки","Гайвани","Чахаи","Пиалы","Чахэ"]},
+{name:"FISHING KUCHER",icon:"🎣",categories:[]}
+];
+
+const container=document.getElementById("shops");
+
+shops.forEach((shop,index)=>{
+const button=document.createElement("button");
+button.className="card";
+button.innerHTML=`<span class="icon">${shop.icon}</span><b>${shop.name}</b><small>Открыть магазин →</small>`;
+button.onclick=()=>openShop(index);
+container.appendChild(button);
+});
+
+function openShop(index){
+const shop=shops[index];
+document.getElementById("home").hidden=true;
+document.getElementById("catalog").hidden=false;
+document.getElementById("shopTitle").textContent=shop.name;
+const content=document.getElementById("shopContent");
+
+if(index===4){
+content.innerHTML='<div class="empty">🎣<h3>Скоро открытие!</h3>Мы готовим для вас кое-что интересное. Совсем скоро здесь появится новый ассортимент. Следите за обновлениями!</div>';
+}else{
+content.innerHTML='<p>Выберите категорию:</p>'+shop.categories.map(c=>`<span class="category">${c}</span>`).join('');
+}
+}
+
+function goHome(){
+document.getElementById("catalog").hidden=true;
+document.getElementById("home").hidden=false;
+}
+</script>
+</body>
+</html>
